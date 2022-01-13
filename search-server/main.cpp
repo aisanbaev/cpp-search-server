@@ -389,12 +389,12 @@ void TestMatchDocument() {
 // Возвращаемые при поиске документов результаты должны быть отсортированы в порядке убывания релевантности
 void TestSortByRelevance() {
     const int doc_id0 = 0;
-	const int doc_id1 = 1;
-	const int doc_id2 = 2;
-	const string content0 = "cat in"s;
-	const string content1 = "fluffy cat"s;
-	const string content2 = "fluffy cat with a beautiful collar"s;
-	const vector<int> ratings = {1, 2, 3};
+    const int doc_id1 = 1;
+    const int doc_id2 = 2;
+    const string content0 = "cat in"s;
+    const string content1 = "fluffy cat"s;
+    const string content2 = "fluffy cat with a beautiful collar"s;
+    const vector<int> ratings = {1, 2, 3};
 
     SearchServer server;
     server.AddDocument(doc_id0, content0, DocumentStatus::ACTUAL, ratings);
@@ -412,11 +412,11 @@ void TestSortByRelevance() {
 //Тест для проверки вычисления рейтинга документа. Рейтинг добавленного документа равен среднему арифметическому оценок документа
 void TestCalculateRatingDocument() {
     const int doc_id0 = 0;
-	const int doc_id1 = 1;
-	const int doc_id2 = 2;
-	const string content0 = "fluffy cat with a beautiful collar"s;
-	const string content1 = "fluffy cat"s;
-	const string content2 = "cat in"s;
+    const int doc_id1 = 1;
+    const int doc_id2 = 2;
+    const string content0 = "fluffy cat with a beautiful collar"s;
+    const string content1 = "fluffy cat"s;
+    const string content2 = "cat in"s;
 
     SearchServer server;
     server.AddDocument(doc_id0, content0, DocumentStatus::ACTUAL, {1, 2, 3});
@@ -432,15 +432,15 @@ void TestCalculateRatingDocument() {
 // Тест для проверки фильтрации результатов поиска с использованием предиката, задаваемого пользователем
 void TestFilterSearchResultWithCustomPredicate() {
     const int doc_id0 = 0;
-	const int doc_id1 = 1;
-	const int doc_id2 = 2;
-	const int doc_id3 = 3;
-	const string content0 = "cat in"s;
-	const string content1 = "fluffy cat"s;
-	const string content2 = "fluffy cat in a beautiful collar"s;
-	const string content3 = "cat without collar"s;
+    const int doc_id1 = 1;
+    const int doc_id2 = 2;
+    const int doc_id3 = 3;
+    const string content0 = "cat in"s;
+    const string content1 = "fluffy cat"s;
+    const string content2 = "fluffy cat in a beautiful collar"s;
+    const string content3 = "cat without collar"s;
 
-	SearchServer server;
+    SearchServer server;
     server.AddDocument(doc_id0, content0, DocumentStatus::ACTUAL, {1, 2, 3});
     server.AddDocument(doc_id1, content1, DocumentStatus::ACTUAL, {13, 14, 15 ,16, 17});
     server.AddDocument(doc_id2, content2, DocumentStatus::ACTUAL, {1, 2, 5});
@@ -482,7 +482,7 @@ void TestSearchDocumentsWithCurrentStatus() {
 // Тест проверяет корректность вычисления релевантности документа
 void TestCalculateRelevanceDocument() {
     const int doc_id0 = 0;
-	const int doc_id1 = 1;
+    const int doc_id1 = 1;
 	const int doc_id2 = 2;
 	const string content0 = "dog at home"s;
 	const string content1 = "fluffy cat"s;
