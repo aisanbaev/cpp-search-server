@@ -461,14 +461,14 @@ void TestFilterSearchResultWithCustomPredicate() {
 // Тест для проверки поиска документов, имеющих заданный статус
 void TestSearchDocumentsWithCurrentStatus() {
     const int doc_id0 = 0;
-	const int doc_id1 = 1;
-	const int doc_id2 = 2;
-	const int doc_id3 = 3;
-	const string content0 = "cat in"s;
-	const string content1 = "fluffy cat"s;
-	const string content2 = "fluffy cat in a beautiful collar"s;
-	const string content3 = "dog without collar"s;
-	const vector<int> ratings = {1, 2, 3};
+    const int doc_id1 = 1;
+    const int doc_id2 = 2;
+    const int doc_id3 = 3;
+    const string content0 = "cat in"s;
+    const string content1 = "fluffy cat"s;
+    const string content2 = "fluffy cat in a beautiful collar"s;
+    const string content3 = "dog without collar"s;
+    const vector<int> ratings = {1, 2, 3};
 
     SearchServer server;
     server.AddDocument(doc_id0, content0, DocumentStatus::REMOVED, ratings);
@@ -483,11 +483,11 @@ void TestSearchDocumentsWithCurrentStatus() {
 void TestCalculateRelevanceDocument() {
     const int doc_id0 = 0;
     const int doc_id1 = 1;
-	const int doc_id2 = 2;
-	const string content0 = "dog at home"s;
-	const string content1 = "fluffy cat"s;
-	const string content2 = "fluffy cat and collar"s;
-	const vector<int> ratings = {1, 2, 3};
+    const int doc_id2 = 2;
+    const string content0 = "dog at home"s;
+    const string content1 = "fluffy cat"s;
+    const string content2 = "fluffy cat and collar"s;
+    const vector<int> ratings = {1, 2, 3};
 
     SearchServer server;
     server.AddDocument(doc_id0, content0, DocumentStatus::ACTUAL, ratings);
