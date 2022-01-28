@@ -81,8 +81,8 @@ public:
     template <typename StringContainer>
     explicit SearchServer(const StringContainer& stop_words)
         : stop_words_(MakeUniqueNonEmptyStrings(stop_words)) {
-        for (const string& word : stop_words_) {
-            if (!IsValidWord(word)) throw invalid_argument("Stop-words contain invalid characters");
+        if (!all_of(stop_words_.begin(), stop_words_.end(), IsValidWord)) {
+            throw invalid_argument("Stop-words contain invalid characters");
         }
     }
 
@@ -92,9 +92,12 @@ public:
     }
 
     void AddDocument(int document_id, const string& document, DocumentStatus status, const vector<int>& ratings) {
-        if (document_id < 0) throw invalid_argument("Invalid document id");
-        if (documents_.count(document_id)) throw invalid_argument("Document with the same ID already exists");
-
+        if (document_id < 0) {
+            throw invalid_argument("Invalid document id");
+        }
+        if (documents_.count(document_id)) {
+            throw invalid_argument("Document with the same ID already exists");
+        }
         const vector<string> words = SplitIntoWordsNoStop(document);
         const double inv_word_count = 1.0 / words.size();
         for (const string& word : words) {
@@ -190,7 +193,9 @@ private:
     vector<string> SplitIntoWordsNoStop(const string& text) const {
         vector<string> words;
         for (const string& word : SplitIntoWords(text)) {
-            if (!IsValidWord(word)) throw invalid_argument("Document contains invalid characters");
+            if (!IsValidWord(word)) {
+                throw invalid_argument("Document contains invalid characters");
+            }
             if (!IsStopWord(word)) {
                 words.push_back(word);
             }
