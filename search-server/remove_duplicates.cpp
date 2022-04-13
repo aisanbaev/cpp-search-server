@@ -7,13 +7,15 @@ void RemoveDuplicates(SearchServer& search_server) {
 
     for (const int document_id : search_server) {
         for (const auto& [word, freqs] : search_server.GetWordFrequencies(document_id)) {
-            words.insert(word);
+            words.insert(static_cast<std::string>(word));
         }
+
         if (words_to_document.count(words)) {
             duplicate_ids.push_back(document_id);
         } else {
             words_to_document[words] = document_id;
         }
+
         words.clear();
     }
 
