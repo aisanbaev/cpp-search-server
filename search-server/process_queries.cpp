@@ -24,4 +24,3 @@ std::vector<Document> ProcessQueriesJoined(const SearchServer& search_server, co
 
     return result;
 }
-

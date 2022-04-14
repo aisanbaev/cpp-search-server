@@ -7,7 +7,10 @@
 template <typename Key, typename Value>
 class ConcurrentMap {
 private:
-    using Bucket = std::pair<std::mutex, std::map<Key, Value>>;
+    struct Bucket {
+        std::mutex mutex;
+        std::map<Key, Value> map;
+    };
     std::vector<Bucket> buckets_;
 
 public:
@@ -18,8 +21,8 @@ public:
         Value& ref_to_value;
 
         Access(const Key& key, Bucket& bucket)
-            : guard(bucket.first)
-            , ref_to_value(bucket.second[key]) {
+            : guard(bucket.mutex)
+            , ref_to_value(bucket.map[key]) {
         }
     };
 
@@ -36,8 +39,8 @@ public:
         std::map<Key, Value> result;
 
         for (auto& bucket : buckets_) {
-            std::lock_guard g(bucket.first);
-            result.merge(bucket.second);
+            std::lock_guard g(bucket.mutex);
+            result.merge(bucket.map);
         }
 
         return result;
