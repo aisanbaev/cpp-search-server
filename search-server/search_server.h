@@ -82,10 +82,8 @@ private:
     };
 
     struct Query {
-        std::set<std::string_view> plus_words;
-        std::set<std::string_view> minus_words;
-        //std::vector<std::string_view> plus_words;
-        //std::vector<std::string_view> minus_words;
+        std::vector<std::string_view> plus_words;
+        std::vector<std::string_view> minus_words;
     };
 
     QueryWord ParseQueryWord(std::string_view text) const;

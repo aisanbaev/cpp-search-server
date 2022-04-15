@@ -109,14 +109,16 @@ std::tuple<std::vector<std::string_view>, DocumentStatus> SearchServer::MatchDoc
     }
 
     if (std::any_of(
+        std::execution::par,
         query.minus_words.begin(), query.minus_words.end(),
         [&](std::string_view word) { return document_to_word_freqs_.at(document_id).count(word); }
     )) return {};
 
     std::vector<std::string_view> matched_words;
     std::copy_if(
+        std::execution::par,
         query.plus_words.begin(), query.plus_words.end(), back_inserter(matched_words),
-        [&](std::string_view word) { return document_to_word_freqs_.at(document_id).count(word);  }
+        [&](std::string_view word) { return document_to_word_freqs_.at(document_id).count(word); }
     );
 
     return {matched_words, documents_.at(document_id).status};
@@ -176,22 +178,16 @@ SearchServer::Query SearchServer::ParseQuery(std::string_view text) const {
         const auto query_word = ParseQueryWord(word);
         if (!query_word.is_stop) {
             if (query_word.is_minus) {
-                result.minus_words.insert(query_word.data);
-                //result.minus_words.push_back(query_word.data);
+                result.minus_words.push_back(query_word.data);
             } else {
-                result.plus_words.insert(query_word.data);
-                //result.plus_words.push_back(query_word.data);
+                result.plus_words.push_back(query_word.data);
             }
         }
     }
 
-    //auto j = unique(result.minus_words.begin(), result.minus_words.end());
-    //result.minus_words.erase(j, result.minus_words.end());
-    //sort(result.minus_words.begin(), result.minus_words.end());
-
-    //auto i = unique(result.plus_words.begin(), result.plus_words.end());
-    //result.plus_words.erase(i, result.plus_words.end());
-    //sort(result.plus_words.begin(), result.plus_words.end());
+    sort(result.plus_words.begin(), result.plus_words.end());
+    auto i = unique(result.plus_words.begin(), result.plus_words.end());
+    result.plus_words.erase(i, result.plus_words.end());
 
     return result;
 }
